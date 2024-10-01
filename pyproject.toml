@@ -1,0 +1,25 @@
+[project]
+name = "replace-template"
+version = "1.0"
+authors = [{name = "Alex C Warren", email = "alexcwarren.info@gmail.com"}]
+description = "Script to automate keyword replacement in provided repo created from a template"
+requires-python = ">= 3.8"
+dependencies = [
+    "isort",
+    "flake8",
+    "Flake8-pyproject",
+    "black",
+    "pre-commit",
+]
+readme = "README.md"
+license = {file = "LICENSE"}
+
+[project.urls]
+Repository = "https://github.com/alexcwarren/replace-template"
+
+[tool.flake8]
+max-line-length = 89
+ignore = ['E203', 'W503']
+
+[tool.black]
+line-length = 89
