@@ -11,6 +11,7 @@ dependencies = [
     "black",
     "pre-commit",
     "pyyaml",
+    "pytest",
 ]
 readme = "README.md"
 license = {file = "LICENSE"}
