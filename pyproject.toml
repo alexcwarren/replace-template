@@ -10,6 +10,7 @@ dependencies = [
     "Flake8-pyproject",
     "black",
     "pre-commit",
+    "pyyaml",
 ]
 readme = "README.md"
 license = {file = "LICENSE"}
