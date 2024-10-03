@@ -18,6 +18,7 @@ def load_replacements(config_file: str):
 
 def replace_keywords(project_dir: str, replacements: dict[str, str]):
     """TODO"""
+    print("ACW")
     project_path: Path = Path(project_dir)
     for item in project_path.iterdir():
         # Ignore hidden files/folders (starting with ".")
