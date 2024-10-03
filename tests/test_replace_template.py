@@ -50,5 +50,20 @@ def test_load_replacements(config_path: str):
 
 def test_replace_template(test_dir: Directory, config_path: str):
     """TODO"""
+    testdir_contents_before: list[str] = test_dir.traverse()
+
     replacements: dict[str, str] = rt.load_replacements(config_path)
     rt.replace_keywords(test_dir.path, replacements)
+
+    testdir_contents: list[str] = test_dir.traverse()
+
+    used_keywords: list[str] = list()
+    for keyword in replacements:
+        for item in testdir_contents_before:
+            if keyword in item:
+                used_keywords.append(keyword)
+                break
+
+    for keyword in used_keywords:
+        assert not any(keyword in item for item in testdir_contents)
+        assert any(replacements[keyword] in item for item in testdir_contents)
