@@ -22,12 +22,13 @@ def replace_keywords(project_dir: str, replacements: dict[str, str]):
     for item in project_path.iterdir():
         # Ignore hidden files/folders (starting with ".")
         if not item.name.startswith("."):
-            print(item.name, end=": ")
+            # print(item.name, end=": ")
             # Replace any keywords in item name
             for keyword, replacement in replacements.items():
                 if keyword in item.name:
-                    print(item.name.replace(keyword, replacement))
-            print()
+                    # print(item.name.replace(keyword, replacement))
+                    pass
+            # print()
             # If item is dir, call replace_keywords on item
             # If item is file, replace any keywords in its contents
 
