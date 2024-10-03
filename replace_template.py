@@ -11,6 +11,7 @@ def load_replacements(config_file: str):
         try:
             replacements = yaml.safe_load(stream)
         except yaml.YAMLError as e:
+            print(f"ERROR: Could not parse {config_file}.")
             print(e)
     return replacements
 
