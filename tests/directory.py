@@ -1,3 +1,4 @@
+import os
 import random
 import shutil
 from pathlib import Path
@@ -90,6 +91,12 @@ class Directory:
 
         # Return modified text
         return text[:insert_idx] + keyword + text[insert_idx:]
+
+    def traverse(self) -> list[str]:
+        """Return a list of all folder names, file names, and file contents."""
+        contents = os.listdir(self.__test_path)
+        # print(c for c in contents)
+        return [""]
 
     def remove_all(self):
         shutil.rmtree(self.__test_path)
