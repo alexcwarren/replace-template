@@ -22,6 +22,9 @@ def replace_keywords(project_dir: str, replacements: dict[str, str]) -> None:
     """TODO"""
     project_path: Path = Path(project_dir)
     for item in project_path.iterdir():
+        if item.name.startswith("."):
+            continue
+
         # Replace any keywords in item name
         for keyword, replacement in replacements.items():
             # Rename the file/directory
@@ -44,8 +47,11 @@ def replace_keywords(project_dir: str, replacements: dict[str, str]) -> None:
             with item.open("r") as file:
                 file_contents = file.read()
 
+            new_file_contents: str = file_contents
+            for keyword, replacement in replacements.items():
+                new_file_contents = new_file_contents.replace(keyword, replacement)
             with item.open("w") as file:
-                file.write(file_contents.replace(keyword, replacement))
+                file.write(new_file_contents.replace(keyword, replacement))
 
 
 if __name__ == "__main__":
