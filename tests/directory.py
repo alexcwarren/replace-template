@@ -37,7 +37,6 @@ class Directory:
 
     def __create_contents(self):
         """TODO"""
-        pass
         # Create 1 to max number of folders.
         num_folders: int = random.randint(1, self.__max_num_folders)
         for i in range(num_folders):
