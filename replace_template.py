@@ -3,10 +3,12 @@ from pathlib import Path
 
 import yaml
 
+INVALID_CHARACTERS: str = '<>:"/\\|?*'
+
 
 def load_replacements(config_file: str):
     """TODO"""
-    replacements: dict = None
+    replacements: dict = dict()
     with open(config_file) as stream:
         try:
             replacements = yaml.safe_load(stream)
@@ -16,21 +18,34 @@ def load_replacements(config_file: str):
     return replacements
 
 
-def replace_keywords(project_dir: str, replacements: dict[str, str]):
+def replace_keywords(project_dir: str, replacements: dict[str, str]) -> None:
     """TODO"""
     project_path: Path = Path(project_dir)
     for item in project_path.iterdir():
-        # Ignore hidden files/folders (starting with ".")
-        if not item.name.startswith("."):
-            # print(item.name, end=": ")
-            # Replace any keywords in item name
-            for keyword, replacement in replacements.items():
-                if keyword in item.name:
-                    # print(item.name.replace(keyword, replacement))
-                    pass
-            # print()
-            # If item is dir, call replace_keywords on item
-            # If item is file, replace any keywords in its contents
+        # Replace any keywords in item name
+        for keyword, replacement in replacements.items():
+            # Rename the file/directory
+            if keyword in item.name:
+                # Check for invalid file/directory name characters
+                for ch in INVALID_CHARACTERS:
+                    if ch in replacement:
+                        print(
+                            f"WARNING: Cannot rename {item.name} with {replacement}."
+                            + f' Invalid character "{ch}".'
+                        )
+                item = item.rename(
+                    item.with_name(item.name.replace(keyword, replacement))
+                )
+
+        if item.is_dir():
+            replace_keywords(str(item), replacements)
+        else:
+            file_contents: str = ""
+            with item.open("r") as file:
+                file_contents = file.read()
+
+            with item.open("w") as file:
+                file.write(file_contents.replace(keyword, replacement))
 
 
 if __name__ == "__main__":
