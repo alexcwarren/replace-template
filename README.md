@@ -34,8 +34,6 @@ python replacement_template.py ../new_repo/
 
 You should now have all **keywords** replaced with their respective **replacements**.
 
-## FOR DEVELOPERS
-
 ### Install in *editable mode* for development
 
 ```shell
