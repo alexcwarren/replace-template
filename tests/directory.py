@@ -1,4 +1,3 @@
-import os
 import random
 import shutil
 from pathlib import Path
@@ -31,6 +30,7 @@ class Directory:
         self.path: str = str(self.__test_path)
 
         if seed:
+            print(f"(using {seed = })")
             random.seed(seed)
 
         self.__create_contents()
@@ -91,11 +91,19 @@ class Directory:
         # Return modified text
         return text[:insert_idx] + keyword + text[insert_idx:]
 
-    def traverse(self) -> list[str]:
+    def traverse(self, dir_path=None) -> dict:
         """Return a list of all folder names, file names, and file contents."""
-        contents = os.listdir(self.__test_path)
-        # print(c for c in contents)
-        return [""]
+        if dir_path is None:
+            dir_path = self.__test_path
+
+        if dir_path.is_file():
+            with dir_path.open("r") as file:
+                return file.read()
+
+        contents: dict = dict()
+        for item in dir_path.iterdir():
+            contents[item.name] = self.traverse(item)
+        return contents
 
     def remove_all(self):
         shutil.rmtree(self.__test_path)
